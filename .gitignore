@@ -19,3 +19,6 @@ venv/
 # Generated artifacts
 # Ignore newly created fixed subtitle outputs by default (tracked fixtures remain tracked)
 *_fcp.srt
+.coverage
+coverage.xml
+htmlcov/

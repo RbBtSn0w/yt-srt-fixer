@@ -9,12 +9,20 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.8", "3.10", "3.12"]
     steps:
       - uses: actions/checkout@v4
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.x'
-      - name: Verify Python files compile
+          python-version: ${{ matrix.python-version }}
+      - name: Install coverage
         run: |
-          python -m py_compile fix_srt.py yt_srt_fixer.py
+          python -m pip install --upgrade pip
+          python -m pip install coverage
+      - name: Run unit tests
+        run: |
+          coverage run -m unittest discover -s tests -p "test_*.py" -v
+          coverage xml
